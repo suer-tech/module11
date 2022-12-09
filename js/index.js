@@ -27,13 +27,39 @@ let fruits = JSON.parse(fruitsJSON);
 
 // отрисовка карточек
 const display = () => {
-  // TODO: очищаем fruitsList от вложенных элементов,
-  // чтобы заполнить актуальными данными из fruits
+  fruitsList.replaceChildren();
 
   for (let i = 0; i < fruits.length; i++) {
-    // TODO: формируем новый элемент <li> при помощи document.createElement,
-    // и добавляем в конец списка fruitsList при помощи document.appendChild
-  }
+    const li = document.createElement("li");
+    li.className = "fruit__item";
+    if (i == 0){
+      li.classList.add("fruit_violet");
+    }
+    if (i == 1){
+      li.classList.add("fruit_green");
+    }
+    if (i == 2){
+      li.classList.add("fruit_carmazin");
+    }
+    if (i == 3){
+      li.classList.add("fruit_yellow");
+    }
+    if (i == 4){
+      li.classList.add("fruit_lightbrown");
+    }
+    const div = document.createElement("div");
+    div.className = "fruit__info";
+    const newLi = fruitsList.appendChild(li);
+    const fruit_info = newLi.appendChild(div);
+    
+    for (k = 0; k < Object.keys(fruits[i]).length; k++){
+      const div2 = document.createElement("div");
+      const divindex = fruit_info.appendChild(div2);
+      const objKey = Object.keys(fruits[i])[k];
+      const objVal = Object.values(fruits[i])[k];
+      const x = divindex.appendChild(document.createTextNode((objKey + ': ' + objVal)));
+      }
+    }
 };
 
 // первая отрисовка карточек
@@ -49,18 +75,25 @@ const getRandomInt = (min, max) => {
 // перемешивание массива
 const shuffleFruits = () => {
   let result = [];
-
-  // ATTENTION: сейчас при клике вы запустите бесконечный цикл и браузер зависнет
-  while (fruits.length > 0) {
-    // TODO: допишите функцию перемешивания массива
-    //
-    // Подсказка: находим случайный элемент из fruits, используя getRandomInt
-    // вырезаем его из fruits и вставляем в result.
+  const i = 0;
+  for (; i < fruits.length; ) {
+    if (fruits.length == 0){
+      break;
+    }
+    const random = getRandomInt(0, fruits.length-1);// находим случайный элемент из fruits, используя getRandomInt
+    const item = fruits[random];
+    console.log(item);
+    console.log(fruits.length);
+    fruits.splice(random,1);// вырезаем его из fruits 
+    result.push(item);// и вставляем в result.
     // ex.: [1, 2, 3], [] => [1, 3], [2] => [3], [2, 1] => [], [2, 1, 3]
     // (массив fruits будет уменьшатся, а result заполняться)
   }
-
+  
   fruits = result;
+  if (fruits == result){
+    alert("Порядок не изменился!");
+  }
 };
 
 shuffleButton.addEventListener('click', () => {
