@@ -22,6 +22,21 @@ let fruitsJSON = `[
 
 // преобразование JSON в объект JavaScript
 let fruits = JSON.parse(fruitsJSON);
+let fruitsIndexed = [];
+for (i = 0; i < fruits.length; i++){
+  fruits[i].index = i;
+  let fruitIndex = {
+    index: fruits[i].index,
+    kind: fruits[i].kind,
+    color: fruits[i].color,
+    weight: fruits[i].weight,
+  };
+  fruitsIndexed.push(fruitIndex); 
+}
+  
+
+fruits = fruitsIndexed;
+console.log(fruits);
 
 /*** ОТОБРАЖЕНИЕ ***/
 
@@ -54,10 +69,10 @@ const display = () => {
     
     for (k = 0; k < Object.keys(fruits[i]).length; k++){
       const div2 = document.createElement("div");
-      const divindex = fruit_info.appendChild(div2);
+      const divfruit = fruit_info.appendChild(div2);
       const objKey = Object.keys(fruits[i])[k];
       const objVal = Object.values(fruits[i])[k];
-      const x = divindex.appendChild(document.createTextNode((objKey + ': ' + objVal)));
+      divfruit.appendChild(document.createTextNode((objKey + ': ' + objVal)));
       }
     }
 };
@@ -90,10 +105,11 @@ const shuffleFruits = () => {
     // (массив fruits будет уменьшатся, а result заполняться)
   }
   
-  fruits = result;
+  
   if (fruits == result){
     alert("Порядок не изменился!");
   }
+  fruits = result;
 };
 
 shuffleButton.addEventListener('click', () => {
